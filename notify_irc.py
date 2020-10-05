@@ -78,7 +78,10 @@ def main():
         message_json = json.loads(message)
         message_list = []
         for commit in message_json["commits"]:
-            message_list.append("%s · %s" % (commit["author"]["username"], commit["message"].split("\n")[0]))
+            author = commit["author"]["username"]
+            first_line = commit["message"].split("\n")[0]
+            url = commit["url"]
+            message_list.append("%s · %s %s" % (author, first_line, url))
         message = "\n".join(message_list)
 
     client = NotifyIRC(
