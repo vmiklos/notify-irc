@@ -3,6 +3,7 @@
 import sys
 import argparse
 import logging
+import json
 
 import pydle
 
@@ -72,10 +73,18 @@ def main():
     args = get_args()
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.WARNING)
 
+    message = args.message
+    if message.startswith("{"):
+        message_json = json.loads(message)
+        message_list = []
+        for commit in message_json["commits"]:
+            message_list.append("%s · %s" % (commit["author"]["username"], commit["message"].split("\n")[0]))
+        message = "\n".join(message_list)
+
     client = NotifyIRC(
         channel=args.channel,
         channel_key=args.channel_key or None,
-        notification=args.message,
+        notification=message,
         use_notice=args.notice,
         nickname=args.nickname,
         sasl_username=args.nickname,
