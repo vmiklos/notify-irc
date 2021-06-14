@@ -4,7 +4,7 @@
 
 See [action.yml](./action.yml) For comprehensive list of options.
  
-Example, send notifications to freenode IRC channel:
+Example, send notifications to libera.chat IRC channel:
 
 ```yaml
 name: "Push Notification"
